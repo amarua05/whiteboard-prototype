@@ -117,7 +117,10 @@ export default function Whiteboard() {
     const rect = canvas.getBoundingClientRect();
     const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
     const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
-    return [clientX - rect.left, clientY - rect.top];
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    return [(clientX - rect.left) * scaleX, (clientY - rect.top) * scaleY];
   };
  
   const onMouseDown = useCallback((e: React.MouseEvent | React.TouchEvent) => {
@@ -320,7 +323,7 @@ const styles: Record<string, React.CSSProperties> = {
   actionBtn: {
     padding: "4px 10px",
     background: "transparent",
-    color: "#888",
+    color: "#d9b8b8",
     border: "1px solid #333",
     borderRadius: 4,
     cursor: "pointer",
@@ -334,7 +337,7 @@ const styles: Record<string, React.CSSProperties> = {
     flex: 1,
     display: "block",
     background: "#fff",
-    cursor: "crosshair",
+    cursor: "grab",
   },
   debug: {
     padding: "4px 16px",
